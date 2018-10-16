@@ -1,0 +1,20 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker build --tag $DOCKER_USERNAME/micro-klix .
+  - docker run $DOCKER_USERNAME/micro-klix
+
+after_script:
+  - docker images
+
+before_deploy:
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+deploy:
+  provider: script
+  script: docker push $DOCKER_USERNAME/micro-klix
+  on:
+    master: true
