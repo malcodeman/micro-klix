@@ -4,9 +4,7 @@ services:
   - docker
 
 script:
-  - docker build --tag micro-klix . &
-
-after_script:
+  - docker build --tag micro-klix .
   - docker images
   - docker login -u=$DOCKER_USERNAME -p=$HEROKU_API_KEY registry.heroku.com
   - docker tag micro-klix registry.heroku.com/micro-klix/web
