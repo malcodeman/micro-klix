@@ -4,16 +4,19 @@ services:
   - docker
 
 script:
-  - docker build --tag $DOCKER_USERNAME/micro-klix .
+  - docker build --tag micro-klix .
 
 after_script:
   - docker images
+  - docker login -u=$DOCKER_USERNAME -p=$HEROKU_API_KEY registry.heroku.com
+  - docker tag micro-klix registry.heroku.com/micro-klix/web
+  - docker push registry.heroku.com/micro-klix/web
 
-before_deploy:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+before_deploy: npm install heroku --no-save
 
 deploy:
-  provider: script
-  script: docker push $DOCKER_USERNAME/micro-klix
-  on:
-    master: true
+  - provider: script
+    script: heroku container:release web
+    skip_cleanup: true
+    on:
+      master: true
