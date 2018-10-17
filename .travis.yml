@@ -14,7 +14,7 @@ before_deploy: npm install heroku --no-save
 
 deploy:
   - provider: script
-    script: heroku container:release web
+    script: heroku container:release web -a micro-klix
     skip_cleanup: true
     on:
       master: true
