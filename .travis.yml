@@ -4,7 +4,7 @@ services:
   - docker
 
 script:
-  - docker build --tag micro-klix .
+  - docker build --tag micro-klix . &
 
 after_script:
   - docker images
