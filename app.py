@@ -2,6 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask import render_template
 from flask import abort
+from flask import request
 from bs4 import BeautifulSoup
 import requests
 
@@ -30,9 +31,9 @@ def get_articles(soup):
 
 def get_previous_page(page):
     if page == 1:
-        return "https://www.klix.ba/najnovije"
+        return request.host + "/latest"
     else:
-        return "https://www.klix.ba/najnovije/str" + str(page - 1)
+        return request.host + "/pages/" + str(page - 1)
 
 
 def get_page(page):
@@ -41,7 +42,7 @@ def get_page(page):
     response = {
         "articles": get_articles(soup),
         "previous": get_previous_page(page),
-        "next": "https://www.klix.ba/najnovije/str" + str(page + 1)
+        "next": request.host + "/pages/" + str(page + 1)
     }
     return response
 
