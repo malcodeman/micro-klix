@@ -1,9 +1,11 @@
 from flask import Flask
 from flask import jsonify
+from flask import render_template
 from bs4 import BeautifulSoup
 import requests
 
 app = Flask(__name__)
+
 
 @app.route('/latest')
 def get_latest():
@@ -19,9 +21,12 @@ def get_latest():
             "shares": int(article.find("span", class_="shareovi").get_text()),
         })
     return jsonify(articles_array)
+
+
 @app.route('/')
 def home():
-    return "Klix microservice"
+    return render_template("index.html")
+
 
 if __name__ == '__main__':
     app.run()
