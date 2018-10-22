@@ -36,13 +36,17 @@ def get_previous_page(page):
         return request.host + "/pages/" + str(page - 1)
 
 
+def get_next_page(page):
+    return request.host + "/pages/" + str(page + 1)
+
+
 def get_page(page):
     content = scrap_page("https://www.klix.ba/najnovije/str" + str(page))
     soup = BeautifulSoup(content, "html.parser")
     response = {
         "articles": get_articles(soup),
         "previous": get_previous_page(page),
-        "next": request.host + "/pages/" + str(page + 1)
+        "next": get_next_page(page)
     }
     return response
 
