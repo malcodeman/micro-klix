@@ -1,17 +1,6 @@
-from flask import Flask
-from flask import jsonify
-from flask import render_template
-from flask import abort
 from flask import request
 from bs4 import BeautifulSoup
 import requests
-
-app = Flask(__name__)
-
-
-def scrap_page(page):
-    result = requests.get(page)
-    return result.content
 
 
 def check_for_k(string):
@@ -33,6 +22,22 @@ def clean_int(string):
         return int(string)
 
 
+def scrap_page(page):
+    result = requests.get(page)
+    return result.content
+
+
+def get_previous_page(page):
+    if page == 1:
+        return request.host + "/latest"
+    else:
+        return request.host + "/pages/" + str(page - 1)
+
+
+def get_next_page(page):
+    return request.host + "/pages/" + str(page + 1)
+
+
 def get_articles(soup):
     base_url = "https://www.klix.ba"
     articles = soup.find_all("article")
@@ -48,17 +53,6 @@ def get_articles(soup):
     return articles_array
 
 
-def get_previous_page(page):
-    if page == 1:
-        return request.host + "/latest"
-    else:
-        return request.host + "/pages/" + str(page - 1)
-
-
-def get_next_page(page):
-    return request.host + "/pages/" + str(page + 1)
-
-
 def get_page(page):
     content = scrap_page("https://www.klix.ba/najnovije/str" + str(page))
     soup = BeautifulSoup(content, "html.parser")
@@ -68,24 +62,3 @@ def get_page(page):
         "next": get_next_page(page)
     }
     return response
-
-
-@app.route("/pages/<int:page>")
-def pages(page):
-    if page <= 0:
-        abort(404)
-    return jsonify(get_page(page))
-
-
-@app.route("/latest")
-def get_latest():
-    return jsonify(get_page(1))
-
-
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-
-if __name__ == "__main__":
-    app.run()

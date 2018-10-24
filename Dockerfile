@@ -2,11 +2,11 @@ FROM python:3-alpine
 
 RUN pip install --upgrade pip
 
-RUN mkdir /app
-
-WORKDIR /app
+RUN mkdir /src
 
 ADD . .
+
+WORKDIR /src
 
 RUN pip install -r requirements.txt
 
