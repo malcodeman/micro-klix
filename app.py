@@ -15,11 +15,11 @@ def scrap_page(page):
 
 
 def check_for_k(string):
-    return 'k' in string
+    return "k" in string
 
 
 def remove_k(string):
-    return string.replace('k', '')
+    return string.replace("k", "")
 
 
 def convert_to_int(string):
@@ -70,22 +70,22 @@ def get_page(page):
     return response
 
 
-@app.route('/pages/<int:page>')
+@app.route("/pages/<int:page>")
 def pages(page):
     if page <= 0:
         abort(404)
     return jsonify(get_page(page))
 
 
-@app.route('/latest')
+@app.route("/latest")
 def get_latest():
     return jsonify(get_page(1))
 
 
-@app.route('/')
+@app.route("/")
 def home():
     return render_template("index.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
