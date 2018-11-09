@@ -12,12 +12,16 @@ app = Flask(__name__)
 def get_page(page):
     if page <= 0:
         abort(404)
-    return jsonify(pages.get_page(page))
+    res = jsonify(pages.get_page(page))
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 
 @app.route("/latest")
 def get_latest():
-    return jsonify(pages.get_page(1))
+    res = jsonify(pages.get_page(1))
+    res.headers.add('Access-Control-Allow-Origin', '*')
+    return res
 
 
 @app.route("/")
@@ -26,4 +30,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
