@@ -1,0 +1,45 @@
+{
+  "info": {
+    "_postman_id": "ffa38632-d93f-4b09-a983-b30748779412",
+    "name": "Micro klix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Latest",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url}}/latest",
+          "host": ["{{url}}"],
+          "path": ["latest"]
+        },
+        "description": "Returns latest news"
+      },
+      "response": []
+    },
+    {
+      "name": "Page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url}}/pages/2",
+          "host": ["{{url}}"],
+          "path": ["pages", "2"]
+        },
+        "description": "Returns news for specific page"
+      },
+      "response": []
+    }
+  ]
+}
