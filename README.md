@@ -6,6 +6,12 @@
 ## Usage
 
 ```
+python3 src/app.py
+```
+
+or
+
+```
 docker build -t <image-name> .
 docker run -p 5000:5000 -e PORT=5000 <image-name>
 ```
